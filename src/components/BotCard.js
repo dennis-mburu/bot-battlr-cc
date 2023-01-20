@@ -10,7 +10,15 @@ const botTypeClasses = {
 };
  
 
-function BotCard({ bot, onAddToYourBots }) {
+function BotCard({ bot, onAddToYourBots, onDeleteBot }) {
+
+  function handleDeleteClick(){
+    fetch(`http://localhost:8002/bots/${bot.id}`, {
+      method: "DELETE"
+    })
+    .then(res => res.json())
+    .then(()=> onDeleteBot(bot.id))
+  }
   return (
     <div className="ui column">
       <div
@@ -48,8 +56,7 @@ function BotCard({ bot, onAddToYourBots }) {
             <div className="ui center aligned segment basic">
               <button
                 className="ui mini red button"
-                onClick={() =>
-                  console.log("add code to connect event listener")
+                onClick={handleDeleteClick
                 }
               >
                 x
