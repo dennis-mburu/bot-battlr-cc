@@ -16,6 +16,10 @@ function BotsPage() {
     }
   }
 
+  function handleYourBotDelete(id){
+    setYourBots(yourBots.filter(bot => bot.id !== id))
+  }
+
   useEffect(() => {
     fetch("http://localhost:8002/bots")
       .then((res) => res.json())
@@ -24,7 +28,7 @@ function BotsPage() {
 
   return (
     <div>
-      <YourBotArmy yourBots={yourBots} />
+      <YourBotArmy yourBots={yourBots} onYourBotDelete={handleYourBotDelete}/>
       <BotCollection bots={bots} onAddToYourBots={handleAddToYourBots} />
     </div>
   );
