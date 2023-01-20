@@ -7,6 +7,8 @@ function BotsPage() {
   const [bots, setBots] = useState([]);
   const [yourBots, setYourBots] = useState([]);
 
+  console.log(bots);
+
   function handleAddToYourBots(id) {
     const result = yourBots.find((bot) => bot.id === id);
     const yourNewBot = bots.find((bot) => bot.id === id);
@@ -16,13 +18,22 @@ function BotsPage() {
     }
   }
 
-  function handleYourBotDelete(id){
-    setYourBots(yourBots.filter(bot => bot.id !== id))
+  function handleYourBotDelete(id) {
+    setYourBots(yourBots.filter((bot) => bot.id !== id));
   }
 
-  function handleBotDelete(id){
-    setBots(bots.filter(bot => bot.id !== id ))
-    setYourBots(yourBots.filter(bot => bot.id !== id ))
+  function handleBotDelete(id) {
+    setBots(bots.filter((bot) => bot.id !== id));
+    setYourBots(yourBots.filter((bot) => bot.id !== id));
+  }
+
+  function handleSortChange(sortValue) {
+    setBots(
+      bots.sort((a, b) => {
+        return a[sortValue] - b[sortValue];
+      })
+    );
+    console.log(bots)
   }
 
   useEffect(() => {
@@ -33,8 +44,13 @@ function BotsPage() {
 
   return (
     <div>
-      <YourBotArmy yourBots={yourBots} onYourBotDelete={handleYourBotDelete}/>
-      <BotCollection bots={bots} onAddToYourBots={handleAddToYourBots} onDeleteBot={handleBotDelete}/>
+      <YourBotArmy yourBots={yourBots} onYourBotDelete={handleYourBotDelete} />
+      <BotCollection
+        bots={bots}
+        onAddToYourBots={handleAddToYourBots}
+        onDeleteBot={handleBotDelete}
+        onSortChange={handleSortChange}
+      />
     </div>
   );
 }

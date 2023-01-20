@@ -22,3 +22,16 @@ body {
 .ui.grid {
   padding: 0px 20px;
 }
+
+.sort-container{
+  display: flex;
+  justify-content: space-between;
+  padding: 1rem;
+  /* width: 50%; */
+  margin: 1rem auto;
+  font-size: 1.2em;
+}
+
+select{
+  padding: 0rem 0.3rem;
+}
