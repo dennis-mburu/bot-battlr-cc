@@ -1,15 +1,20 @@
 import React, { useEffect, useState } from "react";
 import YourBotArmy from "./YourBotArmy";
 import BotCollection from "./BotCollection";
+import { Route, Routes } from "react-router-dom";
+import BotSpecs from "./BotSpecs";
 
 function BotsPage() {
   //start here with your code for step one
   const [bots, setBots] = useState([]);
   const [yourBots, setYourBots] = useState([]);
-
-  console.log(bots);
+  const [bot, setBot] = useState({});
 
   function handleAddToYourBots(id) {
+    setBot(bots.find((bot) => bot.id === id));
+  }
+
+  function addToCollection(id) {
     const result = yourBots.find((bot) => bot.id === id);
     const yourNewBot = bots.find((bot) => bot.id === id);
 
@@ -33,7 +38,6 @@ function BotsPage() {
         return a[sortValue] - b[sortValue];
       })
     );
-    console.log(bots)
   }
 
   useEffect(() => {
@@ -45,12 +49,23 @@ function BotsPage() {
   return (
     <div>
       <YourBotArmy yourBots={yourBots} onYourBotDelete={handleYourBotDelete} />
-      <BotCollection
-        bots={bots}
-        onAddToYourBots={handleAddToYourBots}
-        onDeleteBot={handleBotDelete}
-        onSortChange={handleSortChange}
-      />
+      <Routes>
+        <Route
+          path="/bots/:id"
+          element={<BotSpecs bot={bot} addToCollection={addToCollection} />}
+        />
+        <Route
+          path="/"
+          element={
+            <BotCollection
+              bots={bots}
+              onAddToYourBots={handleAddToYourBots}
+              onDeleteBot={handleBotDelete}
+              onSortChange={handleSortChange}
+            />
+          }
+        />
+      </Routes>
     </div>
   );
 }

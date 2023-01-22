@@ -1,4 +1,5 @@
 import React from "react";
+import { useNavigate } from "react-router-dom";
 
 const botTypeClasses = {
   Assault: "icon military",
@@ -12,6 +13,8 @@ const botTypeClasses = {
 
 function BotCard({ bot, onAddToYourBots, onDeleteBot }) {
 
+  const navigate = useNavigate()
+
   function handleDeleteClick(){
     fetch(`http://localhost:8002/bots/${bot.id}`, {
       method: "DELETE"
@@ -24,7 +27,10 @@ function BotCard({ bot, onAddToYourBots, onDeleteBot }) {
       <div
         className="ui card"
         key={bot.id}
-        onClick={() => onAddToYourBots(bot.id)}
+        // onClick={() => onAddToYourBots(bot.id)}
+        onClick={() => {onAddToYourBots(bot.id)
+          navigate(`/bots/${bot.id}`)
+        }}
       >
         <div className="image" >
           <img alt="oh no!" src={bot.avatar_url} />
